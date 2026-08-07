@@ -12,8 +12,17 @@ def insertion_sort(arr):
     return arr
 
 
-# Driver Code
-numbers = [12, 11, 13, 5, 6]
+# User Input
+n = int(input("Enter the number of elements: "))
 
-print("Original Array:", numbers)
-print("Sorted Array:", insertion_sort(numbers))
+arr = []
+print("Enter the elements:")
+for i in range(n):
+    element = int(input(f"Element {i + 1}: "))
+    arr.append(element)
+
+print("\nOriginal Array:", arr)
+
+insertion_sort(arr)
+
+print("Sorted Array:", arr)
