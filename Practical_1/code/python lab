@@ -1,0 +1,65 @@
+
+def patient_probability_identifier():
+    print("=== Patient Probability Identifier ===")
+    print("Select symptoms by entering yes or no.\n")
+
+    symptoms = {
+        "fever": input("Does the patient have fever? (yes/no): ").strip().lower(),
+        "cough": input("Does the patient have cough? (yes/no): ").strip().lower(),
+        "runny_nose": input("Does the patient have a runny nose? (yes/no): ").strip().lower(),
+        "body_ache": input("Does the patient have body aches? (yes/no): ").strip().lower(),
+        "sore_throat": input("Does the patient have a sore throat? (yes/no): ").strip().lower(),
+        "fatigue": input("Does the patient have fatigue? (yes/no): ").strip().lower()
+    }
+
+    # Educational symptom-matching scores, not medical probabilities
+    scores = {
+        "Flu-like illness": 0,
+        "Common cold": 0,
+        "COVID-19": 0
+    }
+
+    weights = {
+        "Flu-like illness": {
+            "fever": 3, "cough": 2, "body_ache": 3,
+            "fatigue": 2, "runny_nose": 1, "sore_throat": 1
+        },
+        "Common cold": {
+            "fever": 1, "cough": 1, "runny_nose": 3,
+            "sore_throat": 2, "body_ache": 0, "fatigue": 1
+        },
+        "COVID-19": {
+            "fever": 2, "cough": 2, "fatigue": 2,
+            "body_ache": 2, "runny_nose": 1, "sore_throat": 1
+        }
+    }
+
+    for illness, symptom_weights in weights.items():
+        for symptom, weight in symptom_weights.items():
+            if symptoms[symptom] == "yes":
+                scores[illness] += weight
+
+    total_score = sum(scores.values())
+
+    print("\n=== Assessment Results ===")
+
+    if total_score == 0:
+        print("No matching symptoms reported.")
+        print("This tool cannot determine the cause of illness.")
+        return
+
+    for illness, score in sorted(
+        scores.items(), key=lambda item: item[1], reverse=True
+    ):
+        percentage = score / total_score * 100
+        print(f"{illness}: {percentage:.1f}% of matching scores")
+
+    print("\nImportant:")
+    print("These percentages are NOT disease probabilities or diagnoses.")
+    print("Consider medical evaluation if fever persists or symptoms worsen.")
+    print("Seek urgent care for breathing difficulty, chest pain,")
+    print("confusion, or other severe symptoms.")
+
+
+if __name__ == "__main__":
+    patient_probability_identifier()

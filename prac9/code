@@ -1,0 +1,28 @@
+import heapq
+def prim(graph):
+	n=len(graph)
+	visited=[False]*n
+	min_heap=[(0,0,-1)]
+	cost=0
+	mst=[]
+	while min_heap and len(mst)<n:
+		w,u,p=heapq.heappop(min_heap)
+		if visited[u]:
+			continue
+		visited[u]=True
+		cost+=w
+		if p!=-1:
+			mst.append((p,u,w))
+		for v in range(n):
+			if not visited[v] and 0<graph[u][v]<999:
+				heapq.heappush(min_heap,(graph[u][v],v,u))
+	print("Minimum Spanning Tree:")
+	for u,v,w in mst:
+		print(u,"-",v,":",w)
+	print("Minimum Cost:",cost)
+n=int(input("Enter number of vertices: "))
+print("Enter adjacency matrix (0 or 999 for no edge):")
+graph=[]
+for i in range(n):
+	graph.append(list(map(int,input().split())))
+prim(graph)

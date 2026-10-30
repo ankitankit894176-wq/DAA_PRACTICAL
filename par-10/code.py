@@ -1,0 +1,24 @@
+
+def kruskal(vertices,edges):
+    parent=list(range(vertices))
+    def find(x):
+        while parent[x]!=x:
+            parent[x]=parent[parent[x]]
+            x=parent[x]
+        return x
+    mst=[]
+    edges.sort(key=lambda x:x[2])
+    cost=0
+    for u,v,w in edges:
+        pu,pv=find(u),find(v)
+        if pu!=pv:
+            parent[pu]=pv
+            mst.append((u,v,w))
+            cost+=w
+    print("Minimum Spanning Tree:")
+    for u,v,w in mst:
+        print(u,"-",v,":",w)
+    print("Minimum Cost:",cost)
+vertices=4
+edges=[(0,1,10),(0,2,6),(0,3,5),(1,3,15),(2,3,4)]
+kruskal(vertices,edges)
